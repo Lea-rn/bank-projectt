@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..900&family=Monoton&family=Mozilla+Headline:wght@200..700&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Press+Start+2P&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: rgb(241, 235, 235);
+    font-family: "Open Sans", sans-serif;
+    
+}
+
+/* //////////// header ///////////////////// */
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  position: relative;
+}
+.auth-header {
+  text-align: end;
+}
+.auth-header input {
+  text-align: center;
+  width: 20%;
+  border: transparent;
+  padding: 8px;
+  border-radius: 15px;
+  margin-right: 5px;
+}
+
+header span {
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+header img {
+  position: absolute;
+  left: 680px;
+}
