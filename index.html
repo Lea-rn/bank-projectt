@@ -1,28 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <!-- ///////////// header ///////// -->
     <header>
-        <h3>
-            Log in to get started
-        </h3>
+      <h3>Log in to get started</h3>
 
-        <img height="50px" src="./logo.png" alt="">
+      <img height="50px" src="./logo.png" alt="" />
 
-        <div class="auth-header">
-        <input placeholder="USER" type="text"/>
-        <input placeholder="PIN" type="number"/>
+      <div class="auth-header">
+        <input placeholder="USER" type="text" />
+        <input placeholder="PIN" type="number" />
         <span>→</span>
-
-        </div>
+      </div>
     </header>
 
-  
-    
-</body>
+    <main>
+      <!-- ////// main header //////  -->
+      <section class="main-header">
+        <div class="current">
+          <h3>Current balance</h3>
+          <p>as of 10/02/2025</p>
+        </div>
+        <h1 class="amount">0000 <i class="fa-solid fa-euro-sign"></i></h1>
+      </section>
+
+      <!-- /////////////////// section of  movements  ////////// -->
+
+      <!-- //////////// left //////////// -->
+
+      <section class="movements-container">
+        <section class="left">
+          <div class="deposit-container">
+            <div class="deposit-info">
+              <span class="deposit">2 DEPOSIT</span>
+              <span>3 DAYS AGO</span>
+            </div>
+            <p class="deposit-amount">
+              4000 <i class="fa-solid fa-euro-sign"></i>
+            </p>
+          </div>
+
+          <div class="withdraw-container">
+            <div class="withdraw-info">
+              <span class="withdraw">1 withdraw</span>
+              <span>3 DAYS AGO</span>
+            </div>
+            <p class="withdraw-amount">
+              -378 <i class="fa-solid fa-euro-sign"></i>
+            </p>
+          </div>
+        </section>
+
+        <!-- /////////////// right ///////////////// -->
+
+        <section class="right">
+          <form class="transfert-box">
+            <h3>Transfert money</h3>
+            <input class="transfert-input" type="text" />
+            <label class="transfert-to" for="">transfert to</label>
+            <input class="amount-transfert-box-input" type="number" />
+            <label class="amount-transfert-label" for="">Amount</label>
+            <button class="btn-transfert-box">→</button>
+          </form>
+
+          <form class="loan-box">
+            <h3>Request Loan</h3>
+            <input class="amount-loan-box-input" type="number" />
+            <label class="amount-loan-label" for="">Amount</label>
+            <button class="btn-loan-box">→</button>
+          </form>
+
+               <form class="close-box">
+            <h3>Close account</h3>
+            <input class="close-input" type="text" />
+            <label class="confirm-label" for="">confirm user</label>
+            <input class="pin-input" type="number" />
+            <label class="pin-label" for="">confirm pin</label>
+            <button class="btn-close-box">→</button>
+          </form>
+        </section>
+      </section>
+    </main>
+  </body>
 </html>
