@@ -311,3 +311,60 @@ text-align: center;
   border-radius: 10px;
   cursor: pointer;
 }
+
+/* /////////////////// footer ////////////// */
+
+footer {
+
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.in {
+font-size: 12px;
+font-weight: 500;
+margin-right: 10px;
+
+
+}
+
+.average-in {
+font-size: 20px;
+color: #7ed481;
+}
+
+.out {
+font-size: 12px;
+font-weight: 500;
+margin-right: 10px;
+}
+
+.average-out {
+font-size: 20px;
+color: #ba3f3f;
+}
+.interest {
+font-size: 12px;
+font-weight: 500;
+margin-right: 10px;
+}
+
+.average-interest {
+font-size: 20px;
+color: #7ed481;
+}
+
+.logout-timer {
+  font-weight: 800;
+}
+/* main {
+transition: 1s;
+}
+main {
+  opacity: 0;
+} */
