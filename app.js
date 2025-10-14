@@ -28,12 +28,10 @@ const account4 = {
   pin: 4444,
 };
 
-
-
-
-const accounts = [account1, account2, account3, account4 ];
+const accounts = [account1, account2, account3, account4];
 
 //////// import elements :
+const app = document.querySelector("main");
 
 const movementsContainer = document.querySelector(".left");
 const balanceAccount = document.querySelector(".amount");
@@ -50,6 +48,63 @@ const btnLogin = document.querySelector(".btn-login");
 
 const welcomeMessage = document.querySelector(".welcome");
 
+/////// transfert box elements :::
+const transfertUser = document.querySelector(".transfert-input");
+const amountToTransfert = document.querySelector(".amount-transfert-box-input");
+const transfertButton = document.querySelector(".btn-transfert-box");
+
+function updateUi(currentAccount) {
+  displayMovements(currentAccount);
+  displayBalance(currentAccount);
+  calcDisplaySummary(currentAccount);
+}
+
+////////// transfert functionnality ::::
+//// conditions ::
+// balance > amount && reciever should be true && amount > 0 && current account should be defferent of reciever
+
+transfertButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  const amount = Number(amountToTransfert.value);
+  const balance = currentAccount.credit;
+  const reciever = accounts.find((acc) => acc.userName === transfertUser.value);
+
+  if (
+    balance >= amount &&
+    reciever &&
+    currentAccount.userName !== reciever.userName &&
+    amount > 0
+  ) {
+    currentAccount.movements.push(-amount);
+    reciever.movements.push(amount);
+    ///// update ui
+    updateUi(currentAccount);
+    ////
+    transfertUser.value = amountToTransfert.value = "";
+  }
+});
+
+///// authentication functionnality :::
+let currentAccount;
+
+btnLogin.addEventListener("click", function () {
+  currentAccount = accounts.find((acc) => acc.userName === userNameInput.value);
+  console.log("current:", currentAccount);
+  if (currentAccount?.pin === Number(pinInput.value)) {
+    welcomeMessage.textContent = `welcome back ${
+      currentAccount.owner.split(" ")[0]
+    }`;
+
+    app.style.opacity = 1;
+    ///// update ui :
+    updateUi(currentAccount);
+  } else {
+    alert("wrong password or email  !!!");
+  }
+
+  userNameInput.value = pinInput.value = "";
+});
+
 //////// userName functionnality :::
 
 const displayUserName = function (arr) {
@@ -63,15 +118,15 @@ const displayUserName = function (arr) {
   );
 };
 
-displayUserName(accounts)
-console.log(accounts)
+displayUserName(accounts);
+console.log(accounts);
 
 //////////// display movements :::
 
-const displayMovements = function (arr) {
+const displayMovements = function (account) {
   movementsContainer.innerHTML = "";
 
-  arr.forEach((mov, i) => {
+  account.movements.forEach((mov, i) => {
     let type = mov > 0 ? "deposit" : "withdraw";
 
     let html = `
@@ -92,39 +147,40 @@ const displayMovements = function (arr) {
 
 ///// invocation , call , run :
 
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 ///////////// display balance :::
 
-const displayBalance = function (arr) {
-  const blance = arr.reduce((acc, ele) => acc + ele, 0);
+const displayBalance = function (account) {
+  const blance = account.movements.reduce((acc, ele) => acc + ele, 0);
   //// update ui :::
   balanceAccount.textContent = `${blance} €`;
+  account.credit = blance;
 };
 
 ///// invocation ::
-displayBalance(account1.movements);
+// displayBalance(account1.movements);
 
 ///////// display summary ::::
 
-const calcDisplaySummary = function (accountMovement) {
-  const inc = accountMovement.reduce((acc, ele) => acc + ele, 0);
+const calcDisplaySummary = function (account) {
+  const inc = account.movements.reduce((acc, ele) => acc + ele, 0);
 
   //// display ui :::
   inComes.textContent = `${inc} €`;
 
-  const outc = accountMovement
+  const outc = account.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
 
   ////// update ui ::
   outMoney.textContent = `${Math.abs(outc)} €`;
 
-  const interestc = accountMovement
+  const interestc = account.movements
     .filter((mov) => mov > 0)
     .map((deposit, i, arr) => {
       // console.log("comes from filter :" , arr)
-      return (deposit * 1.2) / 100;
+      return (deposit * currentAccount.interestRate) / 100;
     })
     .filter((ele, i, arr) => {
       // console.log("comes from map :" , arr)
@@ -135,7 +191,7 @@ const calcDisplaySummary = function (accountMovement) {
   interest.textContent = `${interestc} €`;
 };
 
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
 
 /////////////// lectures ////////////////////////////// :::
 
