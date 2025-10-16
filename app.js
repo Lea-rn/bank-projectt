@@ -53,11 +53,56 @@ const transfertUser = document.querySelector(".transfert-input");
 const amountToTransfert = document.querySelector(".amount-transfert-box-input");
 const transfertButton = document.querySelector(".btn-transfert-box");
 
+///////// close box elements ::
+
+const closeUser = document.querySelector(".close-input");
+const pinToClose = document.querySelector(".pin-input");
+const closeButton = document.querySelector(".btn-close-box");
+
+/////// loan box elements :::
+const loanInput = document.querySelector(".amount-loan-box-input");
+const loanButton = document.querySelector(".btn-loan-box");
+
+//////// sort element :
+const sortButton = document.querySelector(".sort");
+
+/////////////////////////
+
 function updateUi(currentAccount) {
   displayMovements(currentAccount);
   displayBalance(currentAccount);
   calcDisplaySummary(currentAccount);
 }
+
+///// loan functionnality :::
+
+loanButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  const amount = Number(loanInput.value);
+  if (amount > 0 && currentAccount.movements.some((mov) => mov / 10 > amount)) {
+    currentAccount.movements.push(amount);
+    updateUi(currentAccount);
+    loanInput.value = "";
+  }
+});
+
+////// close functionnality :::
+closeButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  const accountToclose = closeUser.value;
+  const accountPintToClose = Number(pinToClose.value);
+  if (
+    currentAccount.userName === accountToclose &&
+    currentAccount.pin === accountPintToClose
+  ) {
+    const index = accounts.findIndex(
+      (account) => account.userName === accountToclose
+    );
+    accounts.splice(index, 1);
+    app.style.opacity = 0;
+    welcomeMessage.textContent = "Log in to get started";
+  }
+});
 
 ////////// transfert functionnality ::::
 //// conditions ::
@@ -89,11 +134,13 @@ let currentAccount;
 
 btnLogin.addEventListener("click", function () {
   currentAccount = accounts.find((acc) => acc.userName === userNameInput.value);
+
   console.log("current:", currentAccount);
   if (currentAccount?.pin === Number(pinInput.value)) {
     welcomeMessage.textContent = `welcome back ${
       currentAccount.owner.split(" ")[0]
     }`;
+    //// ? optional chaining ....
 
     app.style.opacity = 1;
     ///// update ui :
@@ -123,17 +170,20 @@ console.log(accounts);
 
 //////////// display movements :::
 
-const displayMovements = function (account) {
+///// const x = [1,5,20,15] ; [20,15,5,1]
+const displayMovements = function (account, sort = false) {
   movementsContainer.innerHTML = "";
+  const movs = sort
+    ? account.movements.slice().sort((a, b) => a - b)
+    : account.movements;
 
-  account.movements.forEach((mov, i) => {
+  movs.forEach((mov, i) => {
     let type = mov > 0 ? "deposit" : "withdraw";
 
     let html = `
           <div class="${type}-container">
             <div class="${type}-info">
               <span class="${type}">${i + 1} ${type}</span>
-              <span>3 DAYS AGO</span>
             </div>
             <p class="${type}-amount">
               ${mov} <i class="fa-solid fa-euro-sign"></i>
@@ -144,10 +194,13 @@ const displayMovements = function (account) {
     movementsContainer.insertAdjacentHTML("afterbegin", html);
   });
 };
+//////// sort functionnality ::
 
-///// invocation , call , run :
-
-// displayMovements(account1.movements);
+let sorted = false;
+sortButton.addEventListener("click", function () {
+  displayMovements(currentAccount, !sorted);
+  sorted = !sorted;
+});
 
 ///////////// display balance :::
 
@@ -381,3 +434,39 @@ const calcDisplaySummary = function (account) {
 // const winner = dataBase.find((person)=> person.coins === 200)
 
 // console.log(winner)
+
+/////////////// indexOf()
+
+// const arr = [1,23,4]
+
+// const index = arr.indexOf(23)
+// console.log(index)
+
+/////// findindex() ::
+
+//  const arr = [1,23,4] ;
+
+//  const index = arr.findIndex((ele)=> ele === 1)
+
+//  console.log(index)
+
+//// includes ()  ::
+// const numbers = [20, 22, 50, 100, 150];
+// console.log(numbers.includes(110));
+
+///////// some ::
+// const numbers = [20, 22, 50, 100, 150];
+// const result = numbers.some((ele) => ele > 80); //// fama number akber me 80 !!!
+// console.log(result);
+
+///////// every ::
+// const numbers = [20, 22, 50, 100, 150];
+// const x = numbers.every((ele) => ele > 18); //// every elements is with condition ..!!
+// console.log(x);
+
+// function welcome(name, x = "hello") {
+//   const message = `${x} ${name}`;
+//   return message;
+// }
+
+// console.log(welcome("peter", "good by"));
